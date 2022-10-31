@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  include CurrentUserConcern
+  include CurrentUserConcerns
 
   def create
     user = User

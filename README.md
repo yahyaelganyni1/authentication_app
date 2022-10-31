@@ -127,13 +127,54 @@ Rails.application.routes.draw do
 end
 ```
 
-## 8- create a session controller
+## 8- create a session and registration controller
+
+```console
+touch app/controllers/regisration_controller.rb
+```
 
 ```console
  touch app/controllers/session_controller.rb
 ```
 
-## 9- edit the session controller
+## 9- fill the registration and session controller
+
+### 9.1- registration controller
+
+```ruby
+class RegistrationsController < ApplicationController
+  def create
+    user = User.create!(
+      email: params["user"]["email"],
+      password: params["user"]["password"],
+      password_confirmation: params["user"]["password_confirmation"],
+    )
+    if user
+      session[:user_id] = user.id
+      render json: {
+               status: :created,
+               user: user,
+             }
+    else
+      render json: { status: 500 }
+    end
+  end
+end
+```
+
+lets explain the code
+
+the `user = User.create!(email: params["user"]["email"], password: params["user"]["password"], password_confirmation: params["user"]["password_confirmation"])` is the user that will be created
+
+the `if user` is a condition that will check if the user is created or not
+
+the `session[:user_id] = user.id` is the session that will be created and it will be stored in the cookie
+
+the `render json: { status: :created, user: user }` is the response that will be sent to the frontend app
+
+the `else render json: { status: 500 }` is the response that will be sent to the frontend app if the user is not created and `500` is the status code for internal server error
+
+### 9.2- session controller
 
 ```ruby
 class SessionController < ApplicationController
@@ -172,6 +213,11 @@ if not then it will render a json response with the status and the message that 
 
 ## 10- lets test the session and the registration
 
+**note** we will be using curl to test the session and the registration
+
+**_curl_**
+is a command line tool that used to send requests to the server
+
 ### 10.1- lets start the server
 
 ```console
@@ -189,7 +235,7 @@ curl --header "Content-Type: application/json" \
     http://localhost:3000/registrations
 ```
 
-and you will get a response like this
+#### and you will get a response like this
 
 ```json
 {
@@ -213,7 +259,7 @@ curl --header "Content-Type: application/json" \
     http://localhost:3000/sessions
 ```
 
-and you will get a response like this
+#### and you will get a response like this
 
 ```json
 {
@@ -229,7 +275,7 @@ and you will get a response like this
 }
 ```
 
-**note** that the password_digest is the encrypted password and it will be different for you because it is encrypted and same thing for the created_at and updated_at
+**note** that the password_digest is the encrypted password and it will be different for you because it is encrypted and same thing for the created_at and updated_at and also it will not be formatted it will be squished together in the terminal
 
 ## 11- lets add the login and logout to the routes
 
@@ -267,7 +313,7 @@ a concern is a module that will be used to add methods to the controller
 ### 12.3- lets edit the current_user_concern.rb
 
 ```ruby
-module CurrentUserConcern
+module CurrentUserConcerns
   extend ActiveSupport::Concern
 
   included do
@@ -300,7 +346,7 @@ the `@current_user = User.find(session[:user_id])` is a method that will find th
 
 ```ruby
 class SessionsController < ApplicationController
-  include CurrentUserConcern
+  include CurrentUserConcerns
   ......
 end
 ```
@@ -337,4 +383,8 @@ the `def logged_in` is a method that will check if the user is logged in or not 
 
 the `def logout` is a method that will reset the session and render a json response with the status and the logged_out true and that will log the user out and reset the session
 
-congratulations you have finished the authentication tutorial and now you have a full authentication system with the registration, login, and logout and you can use it in your projects and you can also add more features to it like forgot password, reset password, and more
+## finished
+
+**congratulations you have finished the authentication tutorial and now you have a full authentication system with the registration, login, and logout and you can use it in your projects and you can also add more features to it like forgot password, reset password, and more**
+
+if you liked the tutorial please give it a star 🌟
