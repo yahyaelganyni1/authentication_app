@@ -1,5 +1,7 @@
 # create rails7 authentication API with a cookie store
 
+### this app is for intermediate rails developers
+
 _a rails7 tutorial to create a simple authentication API with a cookie store_
 
 ## creating a new rails7 app
