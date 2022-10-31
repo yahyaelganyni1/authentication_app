@@ -9,7 +9,7 @@ _a rails7 tutorial to create a simple authentication API with a cookie store_
 lets start by creating a new rails7 app
 
 ```bash
-rails new rails7-authentication-api --database=postgresql
+rails new rails7-authentication --database=postgresql
 ```
 
 note here we are not using the `--api` flag because we want to use the `ActionDispatch::Session::CookieStore` middleware
@@ -79,21 +79,23 @@ the `credentials: true` is the credentials that will be allowed to be sent to th
 Rails.application.config.session_store :cookie_store, key: "_authentication_app", domain: "localhost:3000"
 ```
 
-now lets explain what is happening here
+lets explain
 
 the `Rails.application.config.session_store :cookie_store` is the session store that will be used
 
-and the `key: "_authentication_app"` is the key that will be used to encrypt the session
+and the `key: "_authentication_app"` is the key that will be used to encrypt the session and it usually is the name of the app in this case `rails7-authentication` and we add the `_` to the beginning of the name
 
-and the `domain: "localhost:3000"` is the domain that will be used to store the session
+and the `domain: "localhost:3000"` is the domain that will be used to store the session and it is the same domain that we used in the `cors.rb` file and it is the domain of the frontend app that will be on a different port from the backend app
 
 ## 5- create a user model
+
+lets create a user model with email and password
 
 ```console
 rails g model User email password_digest
 ```
 
-and migrate the database
+and then we add the migration to the database by running
 
 ```console
 rails db:migrate
@@ -101,7 +103,7 @@ rails db:migrate
 
 that will create a user model with email and password_digest
 
-password_digest is a column that will be used to store the encrypted password
+`password_digest` is used to store an encrypted password in the database
 
 ## 6- edit the user model
 
