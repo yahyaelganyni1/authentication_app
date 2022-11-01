@@ -383,6 +383,22 @@ the `def logged_in` is a method that will check if the user is logged in or not 
 
 the `def logout` is a method that will reset the session and render a json response with the status and the logged_out true and that will log the user out and reset the session
 
+## 13- final step is to make it work in production
+
+in the `config/intializers/session_store.rb` file we need to add if condition to check if the environment is production or not
+
+```ruby
+if Rails.env = "production"
+  Rails.application.config.session_store :cookie_store, key: "_authentication_app", domain: "your-frontend-domain"
+else
+  Rails.application.config.session_store :cookie_store, key: "_authentication_app"
+end
+```
+
+**what is happening here?**
+
+if it is production then it will use the cookie_store and the key will be `_authentication_app` and the domain will be `your-frontend-domain` and if it is not production then it will use the cookie_store and the key will be `_authentication_app`
+
 ## finished
 
 **congratulations you have finished the authentication tutorial and now you have a full authentication system with the registration, login, and logout and you can use it in your projects and you can also add more features to it like forgot password, reset password, and more**
