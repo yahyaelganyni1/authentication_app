@@ -403,4 +403,17 @@ if it is production then it will use the cookie_store and the key will be `_auth
 
 **congratulations you have finished the authentication tutorial and now you have a full authentication system with the registration, login, and logout and you can use it in your projects and you can also add more features to it like forgot password, reset password, and more**
 
+---
+
+Thanks for reading.
+
 if you liked the tutorial please give it a star 🌟
+
+also follow me.
+
+**Yahya EL Ganayni**
+
+- GitHub: [github](https://github.com/yahyaelganyni1)
+- Twitter: [@YElganayni](https://twitter.com/YElganayni)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/yahya-el-ganayni-a456115b/)
+
